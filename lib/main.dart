@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           locale: locale,
           supportedLocales: const <Locale>[
             Locale("en"),
-            Locale("es"),
+            Locale("ta"),
             // Add other supported locales here
           ],
           localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
@@ -58,8 +58,8 @@ class HomePage extends StatelessWidget {
                   // Toggle between English and Spanish for demonstration
                   final Locale newLocale =
                       LocaleManager.currentLocale.languageCode == "en"
-                          ? const Locale("es")
-                          : const Locale("ta");
+                          ? const Locale("ta")
+                          : const Locale("en");
                   await LocaleManager.setLocale(newLocale);
                 },
                 child: Text(
@@ -99,8 +99,10 @@ class DynamicLocalization {
   static Map<String, String> _localizedStrings = <String, String>{};
 
   static Future<void> loadTranslations(final Locale locale) async {
+    final String url =
+        "https://cdn.jsdelivr.net/gh/jinosh05/flutter_remote_localisation@main/remote_locales/${locale.languageCode}.json";
     final http.Response response = await http.get(
-      Uri.parse("https://example.com/locales/${locale.languageCode}.json"),
+      Uri.parse(url),
     );
     if (response.statusCode == 200) {
       _localizedStrings = Map<String, String>.from(json.decode(response.body));
@@ -121,8 +123,10 @@ class DynamicLocalizationDelegate
   const DynamicLocalizationDelegate();
 
   @override
-  bool isSupported(final Locale locale) =>
-      <String>["en", "es"].contains(locale.languageCode);
+  bool isSupported(final Locale locale) => <String>[
+        "ta",
+        "en",
+      ].contains(locale.languageCode);
 
   @override
   Future<DynamicLocalization> load(final Locale locale) async {
