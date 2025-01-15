@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                   final Locale newLocale =
                       LocaleManager.currentLocale.languageCode == "en"
                           ? const Locale("es")
-                          : const Locale("en");
+                          : const Locale("ta");
                   await LocaleManager.setLocale(newLocale);
                 },
                 child: Text(
